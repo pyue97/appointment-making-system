@@ -21,4 +21,8 @@ class PagesController extends Controller
     public function history() {
         return view('pages.history');
     }
+
+    public function userlist() {
+        return view('pages.userlist');
+    }
 }

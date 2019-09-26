@@ -10,11 +10,14 @@
         <a class="nav-link" href="/">Home</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/registration">Add User (admin)</a>
+        <a class="nav-link" href="/registration">Add User</a>
       </li>
       <li class="nav-item">
-          <a class="nav-link" href="/history">History</a>
-        </li>
+        <a class="nav-link" href="/history">History</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/userlist">User List</a>
+      </li>
       <li class="nav-item">
         <a class="nav-link" href="/login">Log In</a>
       </li>

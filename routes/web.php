@@ -11,10 +11,27 @@
 |
 */
 
-Route::get('/', 'PagesController@index');
+Route::group(['middleware' => ['auth', 'admin']], function() {
+    Route::resource('users', 'UsersController');
+    Route::get('/admin', 'UsersController@index');
+    Route::get('/', 'UsersController@index');
+});
+
+Route::group(['middleware' => ['auth', 'lecturer']], function() {
+    Route::get('/approval', 'PagesController@approval');
+    Route::get('/history', 'PagesController@history');
+    Route::get('/home', 'HomeController@index');
+    Route::get('/', 'HomeController@index');
+});
+
+Route::group(['middleware' => ['auth', 'student']], function() {
+    Route::get('/history', 'PagesController@history');
+    Route::get('/makeappointment', 'PagesController@makeappointment');
+    Route::get('/home', 'HomeController@index');
+    Route::get('/', 'HomeController@index');
+});
+
+Route::get('/home', 'HomeController@index');
 Route::get('/login', 'PagesController@login');
-Route::get('/registration', 'PagesController@registration');
-Route::get('/history', 'PagesController@history');
-Route::get('/userlist', 'PagesController@userlist');
 
-
+Auth::routes(['register' => false]);

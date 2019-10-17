@@ -6,12 +6,8 @@ use Illuminate\Http\Request;
 
 class PagesController extends Controller
 {
-    public function index() {
-        return view('pages.index');
-    }
-
     public function login() {
-        return view('pages.login');
+        return view('auth.login');
     }
 
     public function registration() {
@@ -24,5 +20,13 @@ class PagesController extends Controller
 
     public function userlist() {
         return view('pages.userlist');
+    }
+
+    public function makeappointment() {
+        return view('pages.makeappointment');
+    }
+
+    public function approval() {
+        return view('pages.approval');
     }
 }

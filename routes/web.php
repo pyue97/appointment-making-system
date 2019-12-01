@@ -13,22 +13,21 @@
 
 Route::group(['middleware' => ['auth', 'admin']], function() {
     Route::resource('users', 'UsersController');
-    Route::get('/admin', 'UsersController@index');
     Route::get('/', 'UsersController@index');
 });
 
 Route::group(['middleware' => ['auth', 'lecturer']], function() {
     Route::get('/approval', 'PagesController@approval');
     Route::get('/history', 'PagesController@history');
-    Route::get('/home', 'HomeController@index');
-    Route::get('/', 'HomeController@index');
+    Route::get('/lecturer', 'PagesController@lecturer');
+    Route::get('/', 'PagesController@lecturer');
 });
 
 Route::group(['middleware' => ['auth', 'student']], function() {
     Route::get('/history', 'PagesController@history');
     Route::get('/makeappointment', 'PagesController@makeappointment');
-    Route::get('/home', 'HomeController@index');
-    Route::get('/', 'HomeController@index');
+    Route::get('/student', 'PagesController@student');
+    Route::get('/', 'PagesController@student');
 });
 
 Route::get('/home', 'HomeController@index');

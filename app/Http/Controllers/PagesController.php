@@ -29,4 +29,12 @@ class PagesController extends Controller
     public function approval() {
         return view('pages.approval');
     }
+
+    public function lecturer() {
+        return view('pages.lecturer-dashboard');
+    }
+
+    public function student() {
+        return view('pages.student-dashboard');
+    }
 }

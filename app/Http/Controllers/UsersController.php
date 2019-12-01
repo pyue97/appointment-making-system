@@ -40,9 +40,9 @@ class UsersController extends Controller
     {
         $this->validate($request, [
             'inputUsername' => 'required',
-            'inputPassword' => 'required',
+            'inputPassword' => 'required|min:8',
             'inputName' => 'required',
-            'inputEmail' => 'required',
+            'inputEmail' => 'required|email',
             'inputUserType' => 'required'
         ]);
         

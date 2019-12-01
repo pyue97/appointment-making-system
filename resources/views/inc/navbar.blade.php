@@ -10,18 +10,15 @@
       @if (!Auth::guest())
         @if (Auth::user()->usertype == 'Admin')
           <li class="nav-item">
-            <a class="nav-link" href="/home">Dashboard</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/users/create">Add User</a>
+            <a class="nav-link" href="/users">Dashboard</a>
           </li>
 
         @elseif (Auth::user()->usertype == 'Lecturer')
           <li class="nav-item">
-            <a class="nav-link" href="/home">Dashboard</a>
+            <a class="nav-link" href="/lecturer">Dashboard</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/approval">Approval</a>
+            <a class="nav-link" href="/manage">Manage Timeslots</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/history">History</a>
@@ -29,7 +26,7 @@
 
         @else
           <li class="nav-item">
-            <a class="nav-link" href="/home">Dashboard</a>
+            <a class="nav-link" href="/student">Dashboard</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/makeappointment">Make Appointment</a>

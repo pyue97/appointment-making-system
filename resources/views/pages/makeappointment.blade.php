@@ -15,19 +15,23 @@
                         <label for="ddlLecturer">LECTURER</label>
                         <select id="ddlLecturer" class="form-control">
                             <option selected>Select...</option>
-                            <option>Lecturer 1</option>
-                            <option>Lecturer 2</option>
-                            <option>Lecturer 3</option>
+                            @foreach($users as $user)
+                            <option value="{{$user -> name}}">{{$user -> name}}</option>   
+                            @endforeach
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="ddlDate">DATE</label>
-                        <select id="ddlDate" class="form-control">
-                            <option selected>Select...</option>
-                            <option>Date 1</option>
-                            <option>date 2</option>
-                            <option>date 3</option>
-                        </select>
+                        <div class=''>
+                    <div class="form-group">
+                        <div class='input-group date' id='datetimepicker1'>
+                            <input type='text' class="form-control" id="datepicker"/>
+                            <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                        </div>
+                    </div>
+                    </div>
                     </div>
                     <br/>
                     <button type="submit" class="btn btn-dark col-12">SEARCH</button>
@@ -37,4 +41,19 @@
         </div>
     </div>
     
+@endsection
+
+@section('js')
+    <script>
+        $('#datepicker').datepicker({
+            todayHighlight: true,
+            format: 'dd-mm-yyyy',
+            orientation: "top",
+            startDate: new Date()
+        });
+        $( "#search" ).click(function() {
+            var date = $("#datepicker").datepicker().val();
+            //window.location.href = '/manage/' + date;
+        });
+    </script>
 @endsection

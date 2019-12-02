@@ -26,7 +26,19 @@ class PagesController extends Controller
         return view('pages.makeappointment');
     }
 
+    public function makeappointment_() {
+        return view('pages.makeappointment_');
+    }
+
     public function approval() {
         return view('pages.approval');
+    }
+
+    public function lecturer() {
+        return view('pages.lecturer-dashboard');
+    }
+
+    public function student() {
+        return view('pages.student-dashboard');
     }
 }

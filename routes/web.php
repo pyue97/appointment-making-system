@@ -18,13 +18,13 @@ Route::group(['middleware' => ['auth', 'admin']], function() {
 
 Route::group(['middleware' => ['auth', 'lecturer']], function() {
     Route::get('/approval', 'PagesController@approval');
-    Route::get('/history', 'PagesController@history');
+    Route::get('/history-lecturer', 'HistoryController@index');
     Route::get('/lecturer', 'PagesController@lecturer');
     Route::get('/', 'PagesController@lecturer');
 });
 
 Route::group(['middleware' => ['auth', 'student']], function() {
-    Route::get('/history', 'PagesController@history');
+    Route::get('/history-student', 'HistoryController@index');
     Route::get('/makeappointment', 'PagesController@makeappointment');
     Route::get('/student', 'PagesController@student');
     Route::get('/', 'PagesController@student');

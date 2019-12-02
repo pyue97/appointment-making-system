@@ -10,12 +10,7 @@
 
         <a href="/users/create" class="btn btn-dark col-2" style="float: right">ADD NEW USER</a>
         
-        <select id="ddlUserType" name="ddlUserType" class="form-control col-2">
-            <option selected>User type...</option>
-            <option>Lecturer</option>
-            <option>Student</option>
-        </select>
-        <br />
+        <br /><br /><br />
 
         <table id="tb_UserList" class="table table-bordered table-hover">
             <thead class="thead-dark">

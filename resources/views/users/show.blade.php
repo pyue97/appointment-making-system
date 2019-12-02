@@ -14,7 +14,8 @@
 
         <div class="row justify-content-center align-items-center h-100">
             <div class="col-6">
-                <form action="/" method="POST">
+                <form action="{{route('users.destroy',$user->id)}}" method="POST">
+                    @method('DELETE')
                     {{csrf_field()}}
                     <div class="form-group">
                         <label for="inputUsername">USERNAME</label>
@@ -33,14 +34,8 @@
                         <input type="text" class="form-control" name="inputUserType" value="{{$user->usertype}}" disabled>
                     </div>
                     <br/>
-                    <button type="submit" class="btn btn-dark col-12">EDIT USER</button>
-                </form>
-
-                <form action="/users/{{$user->id}}" method="POST">
-                    {{ method_field('DELETE') }}
-                   <div class="form-group">
-                   <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                   </div>
+                    <a href="{{route('users.edit', $user->id)}}" class="btn btn-dark col-12">EDIT USER</a>
+                    <br /><br />
                     <button type="submit" class="btn btn-danger col-12">DELETE</button>
                 </form>
             

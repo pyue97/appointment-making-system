@@ -10,11 +10,12 @@
         
         <div class="row justify-content-center align-items-center h-100">
             <div class="col-6">
-                <form action="{{ action(['UsersController@update', $user->id]) }}" method="GET">
+                <form action="{{route('users.update', $user->id)}}" method="POST">
+                    @method('PUT')
                     {{csrf_field()}}
                     <div class="form-group">
                         <label for="inputUsername">USERNAME</label>
-                        <input type="text" class="form-control" name="inputUsername" value="$user->username">
+                        <input type="text" class="form-control" name="inputUsername" value="{{$user->username}}">
                     </div>
                     <div class="form-group">
                         <label for="inputPassword">PASSWORD</label>
@@ -22,16 +23,16 @@
                     </div>
                     <div class="form-group">
                         <label for="inputName">NAME</label>
-                        <input type="text" class="form-control" name="inputName" placeholder="$user->name">
+                        <input type="text" class="form-control" name="inputName" value="{{$user->name}}">
                     </div>
                     <div class="form-group">
                         <label for="inputEmail">EMAIL</label>
-                        <input type="text" class="form-control" name="inputEmail" placeholder="$user->email">
+                        <input type="text" class="form-control" name="inputEmail" value="{{$user->email}}">
                     </div>
                     <div class="form-group">
                         <label for="inputUserType">USER TYPE</label>
                         <select name="inputUserType" class="form-control">
-                            <option selected>Select...</option>
+                            <option selected>{{$user->usertype}}</option>
                             <option>Lecturer</option>
                             <option>Student</option>
                         </select>

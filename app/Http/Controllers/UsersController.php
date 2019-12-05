@@ -90,7 +90,23 @@ class UsersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'inputUsername' => 'required',
+            'inputPassword' => 'required|min:8',
+            'inputName' => 'required',
+            'inputEmail' => 'required|email',
+            'inputUserType' => 'required'
+        ]);
+        
+        $user = User::find($id);
+        $user->username = $request->input('inputUsername');
+        $user->password = Hash::make($request->input('inputPassword'));
+        $user->name = $request->input('inputName');
+        $user->email = $request->input('inputEmail');
+        $user->usertype = $request->input('inputUserType');
+        $user->save();
+
+        return redirect('/users')->with('success', 'User Updated');
     }
 
     /**

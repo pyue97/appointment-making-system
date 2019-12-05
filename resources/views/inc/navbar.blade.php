@@ -21,7 +21,7 @@
             <a class="nav-link" href="/manage">Manage Timeslots</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/history">History</a>
+            <a class="nav-link" href="/history-lecturer">History</a>
           </li>
 
         @else
@@ -32,7 +32,7 @@
             <a class="nav-link" href="/makeappointment">Make Appointment</a>
           </li>
           <li class="nav-item">
-              <a class="nav-link" href="/history">History</a>
+              <a class="nav-link" href="/history-student">History</a>
             </li>
         @endif
       @endif

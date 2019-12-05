@@ -18,23 +18,24 @@ Route::group(['middleware' => ['auth', 'admin']], function() {
 
 Route::group(['middleware' => ['auth', 'lecturer']], function() {
     Route::resource('lectures', 'LectureController');
+    Route::get('lecturer/{id}/cancel', ['uses' => 'LectureController@cancel', 'as' => 'lectures.cancel']);
+    Route::get('lecturer/{id}/update', ['uses' => 'LectureController@update', 'as' => 'lectures.update']);
     Route::any('/manage', 'LectureController@manage');
     Route::any('/manage/{date}', 'LectureController@appointment');
     Route::get('/approval', 'PagesController@approval');
     Route::get('/history-lecturer', 'HistoryController@index');
-    Route::get('/lecturer', 'PagesController@lecturer');
-    Route::get('/', 'PagesController@lecturer');
+    Route::get('/lecturer', 'LectureController@index');
+    Route::get('/', 'LectureController@index');
 });
 
 Route::group(['middleware' => ['auth', 'student']], function() {
+    Route::resource('students', 'StudentController');
     Route::get('/history-student', 'HistoryController@index');
     Route::get('/makeappointment_/{date}/{name}', 'StudentController@makeappointment_');
-    Route::get('/student', 'PagesController@student');
-    Route::get('/', 'PagesController@student');
-    Route::get('/makeappointment', function(){
-        $users = DB::table('users')->where('usertype','Lecturer')->select ('usertype','name')->get();
-        return view('pages.makeappointment', compact ('users'));
-    });
+    Route::get('/student', 'StudentController@index');
+    Route::get('/', 'StudentController@index');
+    Route::get('student/{id}/cancel', ['uses' => 'StudentController@cancel', 'as' => 'students.cancel']);
+    Route::get('/makeappointment', 'StudentController@makeappointment');
 });
 
 Route::get('/home', 'HomeController@index');

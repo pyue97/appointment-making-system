@@ -15,8 +15,8 @@
                         <label for="ddlLecturer">LECTURER</label>
                         <select id="ddlLecturer" class="form-control">
                             <option selected>Select...</option>
-                            @foreach($times as $user)
-                            <option value="{{$user -> name}}">{{$user -> name}}</option>   
+                            @foreach($lecturers as $lecturer)
+                            <option value="{{$lecturer -> name}}">{{$lecturer -> name}}</option>   
                             @endforeach
                         </select>
                     </div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Appointment;
+use Illuminate\Support\Facades\DB;
 
 class LectureController extends Controller
 {
@@ -14,7 +15,16 @@ class LectureController extends Controller
      */
     public function index()
     {
-        //
+        $today = date('d-m-Y');
+        $lecturer_name = auth()->user()->name;
+
+        $appointments = DB::table('appointments')
+            ->where('date', '>=', $today)
+            ->where('lecturer_name', $lecturer_name)
+            ->select('id', 'date','time', 'student_name', 'remarks', 'status')
+            ->orderBy('date', 'asc')
+            ->paginate(10);
+        return view('pages.lecturer-dashboard')->with('appointments', $appointments);
     }
 
     /**
@@ -78,7 +88,10 @@ class LectureController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $appointment = Appointment::find($id);
+        $appointment->status = "Approved";
+        $appointment->save();
+        return redirect('/lecturer')->with('success', 'Appointment Approved');
     }
 
     /**
@@ -124,5 +137,16 @@ class LectureController extends Controller
 //        dd($appointment);
 
         return view('lectures.appointment', compact('appointment', 'date'));
+    }
+
+    public function cancel($id)
+    {
+        $appointment = Appointment::find($id);
+        $appointment->student_name = "";
+        $appointment->remarks = "";
+        $appointment->status = "Available";
+        $appointment->save();
+
+        return redirect('/lecturer')->with('success', 'Appointment Cancelled');
     }
 }

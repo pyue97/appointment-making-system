@@ -34,7 +34,7 @@
                     </div>
                     </div>
                     <br/>
-                    <button type="submit" class="btn btn-dark col-12">SEARCH</button>
+                    <button type="button" class="btn btn-dark col-12" id="search">SEARCH</button>
                     <input type="hidden" name="submitted" value="true" />
                 </form>
             </div>
@@ -51,9 +51,12 @@
             orientation: "top",
             startDate: new Date()
         });
+
+
         $( "#search" ).click(function() {
             var date = $("#datepicker").datepicker().val();
-            //window.location.href = '/manage/' + date;
+            var name = $("#ddlLecturer").val();
+            window.location.href = '/makeappointment_/' + date + '/' + name;
         });
     </script>
 @endsection

@@ -28,7 +28,7 @@ Route::group(['middleware' => ['auth', 'lecturer']], function() {
 
 Route::group(['middleware' => ['auth', 'student']], function() {
     Route::get('/history-student', 'HistoryController@index');
-    Route::get('/makeappointment_', 'StudentController@makeappointment');
+    Route::get('/makeappointment_/{date}/{name}', 'StudentController@makeappointment_');
     Route::get('/student', 'PagesController@student');
     Route::get('/', 'PagesController@student');
     Route::get('/makeappointment', function(){

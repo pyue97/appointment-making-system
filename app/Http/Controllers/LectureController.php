@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Appointment;
+use App\User;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class LectureController extends Controller
 {
@@ -49,7 +51,7 @@ class LectureController extends Controller
         $lectureName  = auth()->user()->name;
 
 //        foreach()
-        dd($lectureName);
+        // dd($lectureName);
 //        $user = new Appointment;
 //        $user->name = $input['name'];
 //        $user->email = $input['email'];
@@ -91,6 +93,25 @@ class LectureController extends Controller
         $appointment = Appointment::find($id);
         $appointment->status = "Approved";
         $appointment->save();
+
+        $date = $appointment->date;
+        $time = $appointment->time;
+        $lecturer_name = $appointment->lecturer_name;
+        $student_name = $appointment->student_name;
+        $student_email = User::where('name', $appointment->student_name)->first()->email;
+
+        $data = [
+            'title' => 'Approved Appointment: ' . $student_name,
+            'content' => 'Your appointment on ' . $date . ' at ' . $time . ' has been approved by your lecturer, ' .
+             $lecturer_name . '.'
+        ];
+
+        Mail::send('emails.notification', $data, function($message) use($student_email, $student_name){
+            $message->from('admin@admin.com', 'Admin');
+
+            $message->to($student_email, $student_name)->subject('Approved Appointment');
+        });
+
         return redirect('/lecturer')->with('success', 'Appointment Approved');
     }
 
@@ -142,10 +163,29 @@ class LectureController extends Controller
     public function cancel($id)
     {
         $appointment = Appointment::find($id);
+        $date = $appointment->date;
+        $time = $appointment->time;
+        $lecturer_name = $appointment->lecturer_name;
+        $student_name = $appointment->student_name;
+        $student_email = User::where('name', $appointment->student_name)->first()->email;
+
         $appointment->student_name = "";
         $appointment->remarks = "";
         $appointment->status = "Available";
         $appointment->save();
+
+    
+        $data = [
+            'title' => 'Cancel Appointment: ' . $lecturer_name,
+            'content' => 'Your appointment on ' . $date . ' at ' . $time . ' has been cancelled by your lecturer, ' .
+             $lecturer_name . '.'
+        ];
+
+        Mail::send('emails.notification', $data, function($message) use($student_email, $student_name){
+            $message->from('admin@admin.com', 'Admin');
+
+            $message->to($student_email, $student_name)->subject('Cancel Appointment');
+        });
 
         return redirect('/lecturer')->with('success', 'Appointment Cancelled');
     }

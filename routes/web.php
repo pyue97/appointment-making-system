@@ -31,7 +31,7 @@ Route::group(['middleware' => ['auth', 'lecturer']], function() {
 Route::group(['middleware' => ['auth', 'student']], function() {
     Route::resource('students', 'StudentController');
     Route::get('/history-student', 'HistoryController@index');
-    Route::get('/makeappointment_/{date}/{name}', 'StudentController@makeappointment_');
+    Route::any('/makeappointment_/{date}/{name}', 'StudentController@makeappointment_');
     Route::get('/student', 'StudentController@index');
     Route::get('/', 'StudentController@index');
     Route::get('student/{id}/cancel', ['uses' => 'StudentController@cancel', 'as' => 'students.cancel']);

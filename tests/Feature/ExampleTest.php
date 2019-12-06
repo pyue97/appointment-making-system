@@ -36,6 +36,8 @@ class ExampleTest extends TestCase
         $this->assertCount(2, User::all());
     }
 
+    
+
     /** @test */
     public function a_username_is_required()
     {
@@ -125,4 +127,106 @@ class ExampleTest extends TestCase
             'inputUserType' => 'Student',
         ];
     }
+ 
+    private function isActingLecturer()
+    {
+        $this->actingAs(factory(User::class)->create([
+            'usertype' => 'Lecturer',
+        ]));
+    }
+
+    private function manage() 
+    {
+        return [
+
+            'inputdate' => '12-12-2019',
+            'inputTime' => '9-10',
+            'inputLecturerName' => 'Lecturer01',
+            'inputStatus' => 'Available',
+        ];
+    }
+
+    public function only_lecturer_can_logged_in_dashboard()
+    {
+        $response = $this->get('/manage')->assertRedirect('/login');
+    }
+
+    public function lecturer_can_manage_timeslot()
+    {
+        $this->isActingLecturer();
+
+        $response = $this->post('/lecturer', [
+            'inputdate' => '12-12-2019',
+            'inputTime' => '9-10',
+            'inputLecturerName' => 'Lecturer01',
+            'inputStatus' => 'Available',
+        ]);
+
+        $this->assertCount(2, User::all());
+    }
+
+    public function lecturer_approved()
+    {
+        $this->isActingLecturer();
+
+        $response = $this->post('/lecturer', [
+            'inputdate' => '12-12-2019',
+            'inputTime' => '9-10',
+            'inputLecturerName' => 'Lecturer01',
+            'inputStatus' => 'Approved',
+        ]);
+
+        $this->assertCount(2, User::all());
+    }
+
+
+    private function isActingStudent()
+    {
+        $this->actingAs(factory(User::class)->create([
+            'usertype' => 'Student',
+        ]));
+    }
+
+    private function make() 
+    {
+        return [
+
+            'inputdate' => '12-12-2019',
+            'inputTime' => '9-10',
+            'inputLecturerName' => 'Lecturer01',
+            'inputStatus' => 'Pending',
+            'inputRemark' => 'I want to discuss assignment',
+            'inputStudentName' => 'Student01',
+        ];
+    }
+
+    public function student_makeappoinment()
+    {
+        $this->isActingStudent();
+
+        $response = $this->post('/student', [
+            'inputdate' => '12-12-2019',
+            'inputTime' => '9-10',
+            'inputLecturerName' => 'Lecturer01',
+            'inputRemark' => 'I want to discuss assignment',
+            'inputStatus' => 'Pending',
+        ]);
+
+        $this->assertCount(2, User::all());
+    }
+    
+    public function student_cancelappoinment()
+    {
+        $this->isActingStudent();
+
+        $response = $this->post('/student', [
+            'inputdate' => '12-12-2019',
+            'inputTime' => '9-10',
+            'inputLecturerName' => 'Lecturer01',
+            'inputStatus' => 'Available',
+        ]);
+
+        $this->assertCount(2, User::all());
+    }
+    
 }
